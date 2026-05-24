@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
-class LandingMainPage(BasePage):
+class LandingProfilePage(BasePage):
 
     URL = "https://test.pstv.ru/profile"
 

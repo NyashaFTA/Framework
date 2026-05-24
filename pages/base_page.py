@@ -1,31 +1,74 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from core.waits.wait_manager import WaitManager
+
+
 
 class BasePage:
 
-    def __init__(self, driver):
+    def __init__(
+            self,
+            driver
+    ):
+
         self.driver = driver
 
-    def wait_visible(self, locator, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(
-            EC.visibility_of_element_located(locator)
+    def click_button(
+            self,
+            locator
+    ):
+
+        element = WaitManager.clickable(
+            self.driver,
+            locator
         )
 
-    def click(self, locator, timeout=10):
-        element = WebDriverWait(self.driver, timeout).until(
-            EC.presence_of_element_located(locator)
-    )
+        element.click()
 
-        self.driver.execute_script("arguments[0].click();", element)
+    def type(
+            self,
+            locator,
+            text
+    ):
 
-    def type(self, locator, text, timeout=10, clear=True):
-        element = self.wait_visible(locator, timeout)
+        element = WaitManager.visible(
+            self.driver,
+            locator
+        )
 
-        if clear:
-            element.clear()
+        element.clear()
 
-        element.send_keys(text)
+        element.send_keys(
+            text
+        )
 
-    def get_text(self, locator, timeout=10):
-        element = self.wait_visible(locator, timeout)
+    def get_text(
+            self,
+            locator
+    ):
+
+        element = WaitManager.visible(
+            self.driver,
+            locator
+        )
+
         return element.text
+
+    def is_visible(
+            self,
+            locator
+    ):
+
+        WaitManager.visible(
+            self.driver,
+            locator
+        )
+
+        return True
+
+    def go_to(
+            self,
+            url
+    ):
+
+        self.driver.get(
+            url
+        )
