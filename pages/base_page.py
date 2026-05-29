@@ -1,74 +1,86 @@
+import logging
+
+from selenium.common.exceptions import TimeoutException
+
 from core.waits.wait_manager import WaitManager
 
 
+logger = logging.getLogger(__name__)
+
 
 class BasePage:
-
-    def __init__(
-            self,
-            driver
-    ):
+    def __init__(self, driver):
 
         self.driver = driver
 
-    def click_button(
-            self,
-            locator
-    ):
+    def find(self, locator):
 
-        element = WaitManager.clickable(
-            self.driver,
-            locator
-        )
+        logger.info(f"Find element: {locator}")
+
+        return WaitManager.present(self.driver, locator)
+
+    def click_button(self, locator):
+
+        logger.info(f"Click: {locator}")
+
+        element = WaitManager.clickable(self.driver, locator)
 
         element.click()
 
-    def type(
-            self,
-            locator,
-            text
-    ):
+    def type(self, locator, text):
 
-        element = WaitManager.visible(
-            self.driver,
-            locator
-        )
+        logger.info(f"Typing text into: {locator}")
+
+        element = WaitManager.visible(self.driver, locator)
 
         element.clear()
 
-        element.send_keys(
-            text
-        )
+        element.send_keys(text)
 
-    def get_text(
-            self,
-            locator
-    ):
+    def get_text(self, locator):
 
-        element = WaitManager.visible(
-            self.driver,
-            locator
-        )
+        logger.info(f"Get text: {locator}")
+
+        element = WaitManager.visible(self.driver, locator)
 
         return element.text
 
-    def is_visible(
-            self,
-            locator
-    ):
+    def is_visible(self, locator):
 
-        WaitManager.visible(
-            self.driver,
-            locator
-        )
+        try:
+            WaitManager.visible(self.driver, locator)
 
-        return True
+            return True
 
-    def go_to(
-            self,
-            url
-    ):
+        except TimeoutException:
+            return False
 
-        self.driver.get(
-            url
-        )
+    def is_present(self, locator):
+
+        try:
+            WaitManager.present(self.driver, locator)
+
+            return True
+
+        except TimeoutException:
+            return False
+
+    def go_to(self, url):
+
+        logger.info(f"Open page: {url}")
+
+        self.driver.get(url)
+
+    def refresh(self):
+
+        logger.info("Refresh page")
+
+        self.driver.refresh()
+
+    def scroll_to_element(self, locator):
+
+        logger.info(f"Scroll to: {locator}")
+
+        element = WaitManager.present(self.driver, locator)
+
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
