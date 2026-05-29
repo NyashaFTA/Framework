@@ -1,17 +1,21 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from config.settings import BASE_URL
+from config.environments import BASE_URL
 from config.settings import AUTH_CODE
 
 class LandingMainPage(BasePage):
     URL = BASE_URL
 
     TORSO_BUTTON = (By.CLASS_NAME, "auth-button")
-    AUTHORIZATION_MODAL = (By.CLASS_NAME, "authorization")
+    AUTHORIZATION_MODAL = (By.CLASS_NAME, "authorization__start")
+    ENTER_CREDENTIALS_MODAL = (By.CLASS_NAME, "authorization__form")
     AUTH_BY_EMAIL_BUTTON = (By.CLASS_NAME, "authorization__email-button")
     EMAIL_FIELD = (By.CSS_SELECTOR, 'input[inputmode="email"]')
     AUTH_CODE_FIELD = (By.ID, "id-single-factor-code-text-field")
     SUBMIT_BUTTON = (By.XPATH, "//button[@type='submit']")
+    AGREEMENT_MODAL = (By.XPATH, "//div[contains(@class, 'authorization')][.//div[contains(text(), 'Ваш аккаунт создан')]]")
+    SKIP_AGREEMENT_MODAL_BUTTON = (By.CLASS_NAME, "authorization__skip-button")
+
 
     def open_page(self):
         self.go_to(self.URL)
@@ -26,7 +30,7 @@ class LandingMainPage(BasePage):
         self.type(self.EMAIL_FIELD, email)
 
     def enter_auth_code(self, auth_code):
-        self.type(self.AUTH_CODE_FIELD, auth_code)
+        self.type_otp_code(self.AUTH_CODE_FIELD, auth_code)
 
     def click_submit_button(self):
         self.click_button(self.SUBMIT_BUTTON)
@@ -37,8 +41,17 @@ class LandingMainPage(BasePage):
         self.enter_auth_code(AUTH_CODE)
         self.click_submit_button()
 
+    def skip_agreement_modal(self):
+        self.click_button(self.SKIP_AGREEMENT_MODAL_BUTTON)
+
     def torso_button_is_present(self):
         return self.is_present(self.TORSO_BUTTON)
     
     def authorization_modal_is_present(self):
         return self.is_present(self.AUTHORIZATION_MODAL)
+    
+    def enter_credentials_modal_is_present(self):
+        return self.is_present(self.ENTER_CREDENTIALS_MODAL)
+    
+    def agreement_modal_is_present(self):
+        return self.is_present(self.AGREEMENT_MODAL)

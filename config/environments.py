@@ -12,3 +12,5 @@ ENV_CONFIG = {
         # "api_url": None,
     },
 }
+
+BASE_URL = ENV_CONFIG[ENV]["base_url"]

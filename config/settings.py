@@ -1,12 +1,4 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# настройка окружения
-ENV = os.getenv("ENV", "stage")
-BASE_URL = os.getenv("BASE_URL", "https://stage.pstv.ru")
-# API_URL = os.getenv("API_URL", "https://api.stage.myapp.com")
 
 # настройка браузера
 BROWSER = os.getenv("BROWSER", "chrome")

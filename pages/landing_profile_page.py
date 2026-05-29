@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from config.settings import BASE_URL
+from config.environments import BASE_URL
 
 
 class LandingProfilePage(BasePage):

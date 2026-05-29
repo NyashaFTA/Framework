@@ -19,4 +19,8 @@ def test_login(driver, test_user):
 
     landing_main_page.login_by_email(test_user)
 
+    landing_main_page.agreement_modal_is_present()
+
+    landing_main_page.skip_agreement_modal()
+
     assert landing_profile_page.page_is_loaded()
