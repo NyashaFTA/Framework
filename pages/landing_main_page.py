@@ -39,19 +39,22 @@ class LandingMainPage(BasePage):
         self.enter_email(user.email)
         self.click_submit_button()
         self.enter_auth_code(AUTH_CODE)
-        self.click_submit_button()
 
     def skip_agreement_modal(self):
         self.click_button(self.SKIP_AGREEMENT_MODAL_BUTTON)
 
-    def torso_button_is_present(self):
-        return self.is_present(self.TORSO_BUTTON)
+    def torso_button_is_visible(self):
+        return self.is_visible(self.TORSO_BUTTON)
     
-    def authorization_modal_is_present(self):
-        return self.is_present(self.AUTHORIZATION_MODAL)
+    def authorization_modal_is_visible(self):
+        return self.is_visible(self.AUTHORIZATION_MODAL)
     
-    def enter_credentials_modal_is_present(self):
-        return self.is_present(self.ENTER_CREDENTIALS_MODAL)
+    def enter_credentials_modal_is_visible(self):
+        return self.is_visible(self.ENTER_CREDENTIALS_MODAL)
     
-    def agreement_modal_is_present(self):
-        return self.is_present(self.AGREEMENT_MODAL)
+    def agreement_modal_is_visible(self):
+        return self.is_visible(self.AGREEMENT_MODAL)
+
+    def auth_code_field_is_visible(self):
+        return self.is_visible(self.AUTH_CODE_FIELD)
+    

@@ -1,8 +1,6 @@
 import logging
 from selenium.common.exceptions import TimeoutException
 from core.waits.wait_manager import WaitManager
-import time
-from selenium.webdriver.common.action_chains import ActionChains
 
 
 logger = logging.getLogger(__name__)
@@ -86,17 +84,19 @@ class BasePage:
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     def type_otp_code(self, locator, text):
-        
-        logger.info(f"Typing OTP code into: {locator}")
+        logger.info(f"Typing OTP code via JS into: {locator}")
 
-        first_field = WaitManager.visible(self.driver, locator)
-        first_field.click()
-        first_field.clear()
+        otp_input = WaitManager.visible(self.driver, locator)
 
-        actions = ActionChains(self.driver)
-        for digit in str(text):
-            actions.send_keys(digit)
-            actions.perform()
-            time.sleep(0.1)
+        otp_input.click()
+
+        code_string = str(text).strip()
+
+        js_script = """
+        arguments[0].value = arguments[1];
+        arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+        arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """
+        self.driver.execute_script(js_script, otp_input, code_string)
 
     

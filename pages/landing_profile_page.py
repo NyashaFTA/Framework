@@ -8,8 +8,12 @@ class LandingProfilePage(BasePage):
 
     SMILEY_BUTTON = (By.CLASS_NAME, "profile-menu")
     SMILEY_BUTTON_DROPDOWN = (By.XPATH, '//div[contains(text(), "Выйти")]')
-    # LOGGED_USER_EMAIL = (By.XPATH, '//div[contains(text(), f"{test_user.email}")]')
+    ENTER_PROMOCODE_BUTTON = (By.XPATH, '//div[contains(text(), " Ввести промокод ")]')
+    TARIFF_SELECTION_FORM = (By.CLASS_NAME, "profile__tariff")
 
-    def page_is_loaded(self):
-        self.driver.current_url = self.URL
 
+    def enter_promocode_button_is_visible(self):
+        return self.is_visible(self.ENTER_PROMOCODE_BUTTON)
+
+    def tariff_selection_form_is_visible(self):
+        return self.is_visible(self.TARIFF_SELECTION_FORM)
