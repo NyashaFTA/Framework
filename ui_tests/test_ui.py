@@ -2,7 +2,7 @@ from pages.landing_main_page import LandingMainPage
 from pages.landing_profile_page import LandingProfilePage
 
 
-def test_login(driver, test_user):
+def test_resgister_new_user_skip_consent(driver, test_user):
     landing_main_page = LandingMainPage(driver)
 
     landing_profile_page = LandingProfilePage(driver)
@@ -19,6 +19,6 @@ def test_login(driver, test_user):
 
     landing_main_page.login_by_email(test_user)
 
-    landing_main_page.skip_agreement_modal()
+    landing_main_page.skip_consent_modal()
 
     assert landing_profile_page.tariff_selection_form_is_visible()

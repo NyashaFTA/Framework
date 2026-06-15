@@ -13,8 +13,8 @@ class LandingMainPage(BasePage):
     EMAIL_FIELD = (By.CSS_SELECTOR, 'input[inputmode="email"]')
     AUTH_CODE_FIELD = (By.ID, "id-single-factor-code-text-field")
     SUBMIT_BUTTON = (By.XPATH, "//button[@type='submit']")
-    AGREEMENT_MODAL = (By.XPATH, "//div[contains(@class, 'authorization')][.//div[contains(text(), 'Ваш аккаунт создан')]]")
-    SKIP_AGREEMENT_MODAL_BUTTON = (By.CLASS_NAME, "authorization__skip-button")
+    CONSENT_MODAL = (By.XPATH, "//div[contains(@class, 'authorization')][.//div[contains(text(), 'Ваш аккаунт создан')]]")
+    SKIP_CONSENT_MODAL_BUTTON = (By.CLASS_NAME, "authorization__skip-button")
 
 
     def open_page(self):
@@ -40,8 +40,8 @@ class LandingMainPage(BasePage):
         self.click_submit_button()
         self.enter_auth_code(AUTH_CODE)
 
-    def skip_agreement_modal(self):
-        self.click_button(self.SKIP_AGREEMENT_MODAL_BUTTON)
+    def skip_consent_modal(self):
+        self.click_button(self.SKIP_CONSENT_MODAL_BUTTON)
 
     def torso_button_is_visible(self):
         return self.is_visible(self.TORSO_BUTTON)
@@ -52,8 +52,8 @@ class LandingMainPage(BasePage):
     def enter_credentials_modal_is_visible(self):
         return self.is_visible(self.ENTER_CREDENTIALS_MODAL)
     
-    def agreement_modal_is_visible(self):
-        return self.is_visible(self.AGREEMENT_MODAL)
+    def consent_modal_is_visible(self):
+        return self.is_visible(self.CONSENT_MODAL)
 
     def auth_code_field_is_visible(self):
         return self.is_visible(self.AUTH_CODE_FIELD)

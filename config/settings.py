@@ -19,6 +19,5 @@ ALLURE_RESULTS_DIR = os.path.join(BASE_DIR, "reports/allure")
 LOGS_DIR = os.path.join(BASE_DIR, "logs")
 
 # на будущее
-TEST_USER = os.getenv("TEST_USER", "qa_user")
-TEST_PASSWORD = os.getenv("TEST_PASSWORD", "secret")
+VALID_TEST_USER = os.getenv("VALID_USER_EMAIL")
 AUTH_CODE = os.environ.get("AUTH_CODE")
