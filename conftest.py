@@ -1,11 +1,13 @@
 import pytest
 from utils.user_generator import generate_user
+from utils.user_generator import generate_api_user
 import os
 import logging
 import logging.config
 from core.browser.driver_factory import DriverFactory
 from core.browser.browser_config import BrowserConfig
 from core.browser.browser_type import BrowserType
+from api_client.api_client import UserApi
 
 os.makedirs("logs", exist_ok=True)
 
@@ -58,6 +60,11 @@ def test_user():
 
     return generate_user()
 
+@pytest.fixture
+def test_api_user():
+    logger.info("Generating test API user")
+
+    return generate_api_user()
 
 @pytest.fixture
 def valid_auth_code():
@@ -72,3 +79,7 @@ def valid_auth_code():
         pytest.fail("Не найден валидный код авторизации")
 
     return auth_code
+
+@pytest.fixture
+def api():
+    return UserApi("http://localhost:8000/api/v1")
